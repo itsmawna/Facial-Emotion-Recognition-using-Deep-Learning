@@ -46,21 +46,21 @@ Both models were trained, validated, and evaluated on an enhanced dataset named 
 
 <figure>
   <img src="images/fer2013_samples.png" alt="FER2013 Samples" width="600">
-  <figcaption><em>Figura 1:</em> Sample images from FER2013 dataset showing various facial expressions. [Source](https://www.kaggle.com/datasets/msambare/fer2013)</figcaption>
+  <figcaption><em>Figure 1:</em> Sample images from FER2013 dataset showing various facial expressions.</figcaption>
 </figure>
 
 <figure>
   <img src="images/fer2024_samples.png" alt="FER2024 Samples" width="600">
-  <figcaption><em>Figura 2:</em> Enhanced FER2024 dataset samples with corrected labels and additional diversity. [Source](https://github.com/FERProject/FER24_CKPlus/releases/tag/FER24_CK%2B)</figcaption>
+  <figcaption><em>Figure 2:</em> Enhanced FER2024 dataset samples with corrected labels and additional diversity.</figcaption>
 </figure>
 
 <figure>
   <img src="images/ckplus_samples.png" alt="CK+ Samples" width="600">
-  <figcaption><em>Figura 3:</em> High-quality facial expression images from the CK+ dataset for benchmarking. [Source](https://www.kaggle.com/datasets/shuvoalok/ck-dataset)</figcaption>
+  <figcaption><em>Figure 3:</em> High-quality facial expression images from the CK+ dataset for benchmarking.</figcaption>
 </figure>
 
+---
 **Final dataset used:** FER2024_CK+ (7 emotions)
-
 ---
 
 ## 4. Data Augmentation
@@ -106,17 +106,17 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/cbam_architecture.png" alt="CBAM Architecture" width="600">
-  <figcaption><em>Figura 4:</em> CBAM-5CNN architecture illustrating convolutional blocks and attention mechanisms. [Source](images/cbam_architecture.png)</figcaption>
+  <figcaption><em>Figure 4:</em> CBAM-5CNN architecture illustrating convolutional blocks and attention mechanisms.</figcaption>
 </figure>
 
 <figure>
   <img src="images/channel_attention.png" alt="Channel Attention" width="600">
-  <figcaption><em>Figura 5:</em> Channel Attention map highlighting the most informative feature channels. [Source](images/channel_attention.png)</figcaption>
+  <figcaption><em>Figure 5:</em> Channel Attention map highlighting the most informative feature channels.</figcaption>
 </figure>
 
 <figure>
   <img src="images/spacial_attention.png" alt="Spatial Attention" width="600">
-  <figcaption><em>Figura 6:</em> Spatial Attention map focusing on key facial regions like eyes, eyebrows, and mouth. [Source](images/spacial_attention.png)</figcaption>
+  <figcaption><em>Figure 6:</em> Spatial Attention map focusing on key facial regions like eyes, eyebrows, and mouth.</figcaption>
 </figure>
 
 #### Training Configuration
@@ -137,17 +137,17 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/cbam_accuracy.png" alt="CBAM-5CNN Accuracy" width="600">
-  <figcaption><em>Figura 7:</em> Training and validation accuracy curves for CBAM-5CNN model. [Source](images/cbam_accuracy.png)</figcaption>
+  <figcaption><em>Figure 7:</em> Training and validation accuracy curves for CBAM-5CNN model.</figcaption>
 </figure>
 
 <figure>
   <img src="images/cbam_loss.png" alt="CBAM-5CNN Loss" width="600">
-  <figcaption><em>Figura 8:</em> Training and validation loss curves for CBAM-5CNN model. [Source](images/cbam_loss.png)</figcaption>
+  <figcaption><em>Figure 8:</em> Training and validation loss curves for CBAM-5CNN model.</figcaption>
 </figure>
 
 <figure>
   <img src="images/cbam_confusion_matrix.png" alt="CBAM-5CNN Confusion Matrix" width="600">
-  <figcaption><em>Figura 9:</em> Confusion matrix of CBAM-5CNN predictions across seven emotions. [Source](images/cbam_confusion_matrix.png)</figcaption>
+  <figcaption><em>Figure 9:</em> Confusion matrix of CBAM-5CNN predictions across seven emotions.</figcaption>
 </figure>
 
 ---
@@ -166,7 +166,7 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/efficientnet_architecture.png" alt="EfficientNet Architecture" width="600">
-  <figcaption><em>Figura 10:</em> EfficientNetB3 architecture used with transfer learning for facial emotion recognition. [Source](images/efficientnet_architecture.png)</figcaption>
+  <figcaption><em>Figure 10:</em> EfficientNetB3 architecture used with transfer learning for facial emotion recognition.</figcaption>
 </figure>
 
 #### Training Configuration
@@ -187,17 +187,17 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/effnet_accuracy.png" alt="EfficientNetB3 Accuracy" width="600">
-  <figcaption><em>Figura 11:</em> Training and validation accuracy curves for EfficientNetB3 model. [Source](images/effnet_accuracy.png)</figcaption>
+  <figcaption><em>Figure 11:</em> Training and validation accuracy curves for EfficientNetB3 model. [Source]</figcaption>
 </figure>
 
 <figure>
   <img src="images/effnet_loss.png" alt="EfficientNetB3 Loss" width="600">
-  <figcaption><em>Figura 12:</em> Training and validation loss curves for EfficientNetB3 model. [Source](images/effnet_loss.png)</figcaption>
+  <figcaption><em>Figure 12:</em> Training and validation loss curves for EfficientNetB3 model.</figcaption>
 </figure>
 
 <figure>
   <img src="images/effnet_confusion_matrix.png" alt="EfficientNetB3 Confusion Matrix" width="600">
-  <figcaption><em>Figura 13:</em> Confusion matrix of EfficientNetB3 predictions across seven emotions. [Source](images/effnet_confusion_matrix.png)</figcaption>
+  <figcaption><em>Figure 13:</em> Confusion matrix of EfficientNetB3 predictions across seven emotions.</figcaption>
 </figure>
 
 ---
@@ -211,12 +211,12 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/test_effnet.png" alt="EfficientNetB3 Model Test" width="600">
-  <figcaption><em>Figura 14:</em> Sample test results of EfficientNetB3 showing correct emotion predictions. [Source](images/test_effnet.png)</figcaption>
+  <figcaption><em>Figure 14:</em> Sample test results of EfficientNetB3 showing correct emotion predictions.</figcaption>
 </figure>
 
 <figure>
   <img src="images/test_cbam.png" alt="CBAM-5CNN Model Test" width="600">
-  <figcaption><em>Figura 15:</em> Sample test results of CBAM-5CNN showing correct emotion predictions. [Source](images/test_cbam.png)</figcaption>
+  <figcaption><em>Figure 15:</em> Sample test results of CBAM-5CNN showing correct emotion predictions.</figcaption>
 </figure>
 
 ### Observations
@@ -251,4 +251,3 @@ For any inquiries, feedback, or to discuss this project further, please do not h
 13. [Data Augmentation: Tout Savoir, DataScientest](https://datascientest.com/data-augmentation-tout-savoir)  
 14. [Complete Guide to Data Augmentation, DataCamp](https://www.datacamp.com/tutorial/complete-guide-data-augmentation)  
 15. [Data Augmentation Techniques in CNN Using TensorFlow, Medium](https://medium.com/ymedialabs-innovation/data-augmentation-techniques-in-cnn-using-tensorflow-371ae43d5be9)  
-
