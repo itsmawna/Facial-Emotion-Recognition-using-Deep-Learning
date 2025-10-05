@@ -1,0 +1,211 @@
+# Facial Emotion Recognition using Deep Learning
+
+This project focuses on the development of a Facial Emotion Recognition (FER) system using deep learning techniques.  
+Two complementary models were designed and compared:
+
+1. A **custom Convolutional Neural Network (CBAM-5CNN)** built entirely from scratch and integrated with an **attention mechanism (CBAM)**.
+2. A **pretrained EfficientNetB3 model** fine-tuned on a curated facial emotion dataset.
+
+The goal is to classify human facial expressions into seven emotions: Angry, Disgust, Fear, Happy, Sad, Surprise, and Neutral.
+
+---
+
+## 1. Project Overview
+
+Facial Emotion Recognition (FER) is an important field within artificial intelligence and computer vision.  
+It aims to identify human emotions through facial expressions, contributing to areas such as affective computing, healthcare, social robotics, and human-computer interaction.
+
+This project investigates two deep learning approaches:
+- A **from-scratch architecture** designed to be interpretable, lightweight, and efficient (CBAM-5CNN).
+- A **transfer learning approach** (EfficientNetB3) designed to maximize accuracy and robustness.
+
+Both models were trained, validated, and evaluated on an enhanced dataset named **FER2024_CK+**, which combines cleaned FER2013 images and the high-quality CK+ dataset.
+
+---
+
+## 2. Objectives
+
+The main objectives of this project are as follows:
+
+- Develop and train deep learning models to automatically detect and classify facial emotions.
+- Compare the performance of a pretrained model versus a custom-built CNN.
+- Improve dataset quality through cleaning, relabeling, and augmentation.
+- Integrate attention mechanisms to enhance model focus on key facial features.
+- Evaluate model performance using quantitative metrics and visual analysis.
+- Explore the potential for real-time emotion recognition applications.
+
+---
+
+## 3. Dataset Description
+
+The project utilizes a combination of publicly available datasets and a custom enhanced version.
+
+| Dataset | Description | Images | Emotions | Source |
+|----------|--------------|---------|-----------|---------|
+| FER2013 | Grayscale facial expression dataset with seven emotion categories (48x48). | 35,887 | 7 | [Kaggle](https://www.kaggle.com/datasets/msambare/fer2013) |
+| FER2024 | Cleaned and relabeled version of FER2013, created to reduce noise and misclassifications. | 35,784 | 10 | Custom |
+| CK+ | High-quality dataset used for benchmarking facial expression recognition. | 920 | 7 | [CK+ Dataset](http://www.peterkim.co.kr/research/ck+dataset) |
+
+![FER2013 Samples](images/fer2013_samples.png)
+![FER2024 Samples](images/fer2024_samples.png)
+![CK+ Samples](images/ckplus_samples.png)
+
+**Final dataset used:** FER2024_CK+ (7 emotions)
+
+### Data Cleaning and Preparation
+
+- Removed 94 non-facial or corrupted images.
+- Corrected labeling errors from the original FER2013 dataset.
+- Added additional emotion categories (e.g., Confused, Contempt, Sleepy) to extend diversity.
+- Standardized all images to 48x48 grayscale format.
+- Combined FER2024 and CK+ datasets into a balanced dataset containing 35,861 samples.
+
+---
+
+## 4. Data Augmentation
+
+Data augmentation was applied to increase dataset variability and prevent overfitting.  
+The `ImageDataGenerator` from Keras was used with the following parameters:
+
+```python
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+train_datagen = ImageDataGenerator(
+    rescale=1./255,
+    rotation_range=30,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    brightness_range=[0.8, 1.2],
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True
+)
+```
+---
+## 5. Model Architectures
+
+### 5.1 CBAM-5CNN (Model Built from Scratch)
+
+The CBAM-5CNN is a deep Convolutional Neural Network that integrates a Convolutional Block Attention Module (CBAM).  
+This design allows the network to focus on the most informative channels and spatial regions within facial images.
+
+#### Architecture Details
+
+| Block | Layers | Filters | Description |
+|--------|---------|----------|-------------|
+| Block 1 | Conv2D + BatchNorm + CBAM + MaxPooling + Dropout | 64 | Low-level edge extraction |
+| Block 2 | Conv2D + BatchNorm + CBAM + MaxPooling | 128 | Mid-level pattern recognition |
+| Block 3 | Conv2D ×3 + CBAM | 256 | Emotion-related feature extraction |
+| Block 4 | Conv2D ×3 + CBAM | 512 | High-level facial representation |
+| Block 5 | Conv2D ×3 + CBAM | 512 | Focus refinement |
+| Dense | Flatten + Dense(7, Softmax) | - | Final emotion classification |
+
+#### Attention Mechanism (CBAM)
+
+- **Channel Attention:** Learns to emphasize important feature maps across channels.  
+- **Spatial Attention:** Highlights significant facial regions such as eyes, eyebrows, and mouth.  
+- **Activation Functions:** ReLU for non-linearity and Sigmoid for attention scaling.
+
+![CBAM Architecture](images/cbam_architecture.png)
+![Channel Attention](images/channel_attention.png)
+![Spatial Attention](images/spatial_attention.png)
+
+#### Training Configuration
+
+- Optimizer: Adam (learning rate = 0.0001)  
+- Loss Function: Categorical Crossentropy  
+- Regularization: Dropout, BatchNormalization  
+- Callbacks: EarlyStopping, ReduceLROnPlateau  
+- Metrics: Accuracy, Precision, Recall
+
+#### Results
+
+| Metric | Training | Validation |
+|---------|-----------|------------|
+| Accuracy | 80.55% | 78.9% |
+| Precision | 84.31% | 81.0% |
+| Recall | 77.09% | 75.4% |
+
+![Cbam-5CNN Accuracy](images/cbam_accuracy.png)
+![Cbam-5CNN loss](images/cbam_loss.png)
+![Cbam-5CNN Confusion Matrix](images/cbam_confusion_matrix.png)
+---
+
+### 5.2 EfficientNetB3 (Pretrained Model)
+
+The EfficientNetB3 model leverages transfer learning to achieve higher accuracy with fewer parameters.  
+It was originally pretrained on the ImageNet dataset and fine-tuned on FER2024_CK+.
+
+#### Architecture Adaptation
+
+- Base model: EfficientNetB3 (include_top=False)  
+- Added layers:  
+  - GlobalAveragePooling2D  
+  - Dense(256, activation='relu')  
+  - Dropout(0.4)  
+  - Dense(7, activation='softmax')  
+- Fine-tuned the last 50 layers with a reduced learning rate (1e-5).
+
+![EfficientNet Architecture](images/efficientnet_architecture.png)
+
+#### Training Configuration
+
+- Optimizer: Adam (learning rate = 1e-5)  
+- Loss Function: Categorical Crossentropy  
+- Batch Size: 32  
+- Epochs: 30  
+- Callbacks: EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
+
+#### Results
+
+| Metric | Training | Validation |
+|---------|-----------|------------|
+| Accuracy | 86.7% | 83.7% |
+| Precision | 87.5% | 86.1% |
+| Recall | 84.8% | 82.5% |
+
+![EfficientNetB3 Accuracy](images/effnet_accuracy.png)
+![EfficientNetB3 loss](images/effnet_loss.png)
+![EfficientNetB3 Confusion Matrix](images/effnet_confusion_matrix.png)
+---
+
+## 6. Comparative Analysis
+
+| Model | Accuracy | Precision | Recall | F1-Score |
+|--------|-----------|-----------|---------|-----------|
+| CBAM-5CNN | 80.55% | 84.31% | 77.09% | 80.0% |
+| EfficientNetB3 | 83.7% | 86.1% | 82.5% | 84.3% |
+
+![EfficientNetB3 Model Test](images/test_effnet.png)
+![Cbam-5CNN Model Test](images/test_cbam.png)
+
+### Observations
+
+- EfficientNetB3 achieved higher overall accuracy and stability.  
+- The CBAM-5CNN model provided better interpretability and was computationally efficient.  
+- Both models performed well, particularly for emotions such as Happy and Neutral.  
+- Some misclassifications occurred between similar emotions (Fear vs Surprise).
+
+---
+### Feedback
+For any inquiries, feedback, or to discuss this project further, please do not hesitate to contact me.
+
+---
+## References
+
+[1] EfficientNet: Optimizing Deep Learning Efficiency, OpenGenus IQ. Available at: https://iq.opengenus.org/efficientnet/  
+[2] EfficientNet: Optimizing Deep Learning Efficiency, Viso.ai. Available at: https://viso.ai/  
+[3] EfficientNet-B3, Scribd. Available at: https://fr.scribd.com/document/638261928/EfficientNet-B3  
+[4] Inverted Residual Block, Serp.ai. Available at: https://serp.ai/inverted-residual-block/  
+[5] Squeeze and Excitation Networks, Arxiv.org. Available at: https://arxiv.org/pdf/1709.01507  
+[6] Squeeze and Excitation Networks, Medium. Available at: https://medium.com/@Vinoth-Ramadoss/squeeze-and-excitation-networks-84e3db0e04e2  
+[7] Complete Architectural Details of All EfficientNet Models, Towards Data Science. Available at: https://towardsdatascience.com/complete-architectural-details-of-all-efficientnet-models-5fd5b736142  
+[8] Understanding Attention Modules: CBAM and BAM, Medium. Available at: https://medium.com/visionwizard/understanding-attention-modules-cbam-and-bam-a-quick-read-ca8678d1c671  
+[9] Remote Sensing and Attention Modules, MDPI. Available at: https://www.mdpi.com/2072-4292/15/9/2406  
+[10] Early Stopping to Avoid Overtraining Neural Network Models, Machine Learning Mastery. Available at: https://machinelearningmastery.com/early-stopping-to-avoid-overtraining-neural-network-models/  
+[11] Early Stopping for Regularisation in Deep Learning, GeeksforGeeks. Available at: https://www.geeksforgeeks.org/early-stopping-for-regularisation-in-deep-learning/  
+[12] ReduceLROnPlateau - TensorFlow Python, W3cubDocs. Available at: https://tf.keras.callbacks.ReduceLROnPlateau  
+[13] Data Augmentation: Tout Savoir, DataScientest. Available at: https://datascientest.com/data-augmentation-tout-savoir  
+[14] Complete Guide to Data Augmentation, DataCamp. Available at: https://www.datacamp.com/tutorial/complete-guide-data-augmentation  
+[15] Data Augmentation Techniques in CNN Using TensorFlow, Medium. Available at: https://medium.com/ymedialabs-innovation/data-augmentation-techniques-in-cnn-using-tensorflow-371ae43d5be9  
+
