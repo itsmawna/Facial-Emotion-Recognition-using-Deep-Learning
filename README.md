@@ -3,7 +3,7 @@
 This project focuses on the development of a Facial Emotion Recognition (FER) system using deep learning techniques.  
 Two complementary models were designed and compared:
 
-1. A **custom Convolutional Neural Network (CBAM-5CNN)** built entirely from scratch and integrated with an **attention mechanism (CBAM)**.
+1. A **custom Convolutional Neural Network (CBAM-5CNN)** built entirely from scratch and integrated with an **attention mechanism (CBAM)**.  
 2. A **pretrained EfficientNetB3 model** fine-tuned on a curated facial emotion dataset.
 
 The goal is to classify human facial expressions into seven emotions: Angry, Disgust, Fear, Happy, Sad, Surprise, and Neutral.
@@ -16,8 +16,8 @@ Facial Emotion Recognition (FER) is an important field within artificial intelli
 It aims to identify human emotions through facial expressions, contributing to areas such as affective computing, healthcare, social robotics, and human-computer interaction.
 
 This project investigates two deep learning approaches:
-- A **from-scratch architecture** designed to be interpretable, lightweight, and efficient (CBAM-5CNN).
-- A **transfer learning approach** (EfficientNetB3) designed to maximize accuracy and robustness.
+- A **from-scratch architecture** designed to be interpretable, lightweight, and efficient (_CBAM-5CNN_).  
+- A **transfer learning approach** (_EfficientNetB3_) designed to maximize accuracy and robustness.
 
 Both models were trained, validated, and evaluated on an enhanced dataset named **FER2024_CK+**, which combines cleaned FER2013 images and the high-quality CK+ dataset.
 
@@ -25,11 +25,11 @@ Both models were trained, validated, and evaluated on an enhanced dataset named 
 
 ## 2. Objectives
 
-- Develop and train deep learning models to automatically detect and classify facial emotions.
-- Compare the performance of a pretrained model versus a custom-built CNN.
-- Improve dataset quality through cleaning, relabeling, and augmentation.
-- Integrate attention mechanisms to enhance model focus on key facial features.
-- Evaluate model performance using quantitative metrics and visual analysis.
+- Develop and train deep learning models to automatically detect and classify facial emotions.  
+- Compare the performance of a pretrained model versus a custom-built CNN.  
+- Improve dataset quality through cleaning, relabeling, and augmentation.  
+- Integrate attention mechanisms to enhance model focus on key facial features.  
+- Evaluate model performance using quantitative metrics and visual analysis.  
 - Explore the potential for real-time emotion recognition applications.
 
 ---
@@ -39,42 +39,34 @@ Both models were trained, validated, and evaluated on an enhanced dataset named 
 | Dataset | Description | Images | Emotions | Source |
 |----------|--------------|---------|-----------|---------|
 | FER2013 | Grayscale facial expression dataset with seven emotion categories (48x48). | 35,887 | 7 | [FER2013 Dataset](https://www.kaggle.com/datasets/msambare/fer2013) |
-| FER2024 | Cleaned and relabeled version of FER2013, created to reduce noise and misclassifications. | 35,784 | 10 | [FER 2024 Dataset](https://github.com/FERProject/FER24_CKPlus/releases/tag/FER24_CK%2B) |
+| FER2024 | Cleaned and relabeled version of FER2013. | 35,784 | 10 | [FER 2024 Dataset](https://github.com/FERProject/FER24_CKPlus/releases/tag/FER24_CK%2B) |
 | CK+ | High-quality dataset used for benchmarking facial expression recognition. | 920 | 7 | [CK+ Dataset](https://www.kaggle.com/datasets/shuvoalok/ck-dataset) |
 
 ### Sample Images
 
 <figure>
   <img src="images/fer2013_samples.png" alt="FER2013 Samples" width="600">
-  <figcaption>Sample images from FER2013 dataset showing various facial expressions.</figcaption>
+  <figcaption><em>Figura 1:</em> Sample images from FER2013 dataset showing various facial expressions. [Source](https://www.kaggle.com/datasets/msambare/fer2013)</figcaption>
 </figure>
 
 <figure>
   <img src="images/fer2024_samples.png" alt="FER2024 Samples" width="600">
-  <figcaption>Enhanced FER2024 dataset samples with corrected labels and additional diversity.</figcaption>
+  <figcaption><em>Figura 2:</em> Enhanced FER2024 dataset samples with corrected labels and additional diversity. [Source](https://github.com/FERProject/FER24_CKPlus/releases/tag/FER24_CK%2B)</figcaption>
 </figure>
 
 <figure>
   <img src="images/ckplus_samples.png" alt="CK+ Samples" width="600">
-  <figcaption>High-quality facial expression images from the CK+ dataset for benchmarking.</figcaption>
+  <figcaption><em>Figura 3:</em> High-quality facial expression images from the CK+ dataset for benchmarking. [Source](https://www.kaggle.com/datasets/shuvoalok/ck-dataset)</figcaption>
 </figure>
 
 **Final dataset used:** FER2024_CK+ (7 emotions)
-
-### Data Cleaning and Preparation
-
-- Removed 94 non-facial or corrupted images.
-- Corrected labeling errors from the original FER2013 dataset.
-- Added additional emotion categories (e.g., Confused, Contempt, Sleepy) to extend diversity.
-- Standardized all images to 48x48 grayscale format.
-- Combined FER2024 and CK+ datasets into a balanced dataset containing 35,861 samples.
 
 ---
 
 ## 4. Data Augmentation
 
 Data augmentation was applied to increase dataset variability and prevent overfitting.  
-The `ImageDataGenerator` from Keras was used with the following parameters:
+The `ImageDataGenerator` from Keras was used:
 
 ```python
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -114,17 +106,17 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/cbam_architecture.png" alt="CBAM Architecture" width="600">
-  <figcaption>CBAM-5CNN architecture illustrating convolutional blocks and attention mechanisms.</figcaption>
+  <figcaption><em>Figura 4:</em> CBAM-5CNN architecture illustrating convolutional blocks and attention mechanisms. [Source](images/cbam_architecture.png)</figcaption>
 </figure>
 
 <figure>
   <img src="images/channel_attention.png" alt="Channel Attention" width="600">
-  <figcaption>Channel Attention map highlighting the most informative feature channels.</figcaption>
+  <figcaption><em>Figura 5:</em> Channel Attention map highlighting the most informative feature channels. [Source](images/channel_attention.png)</figcaption>
 </figure>
 
 <figure>
   <img src="images/spacial_attention.png" alt="Spatial Attention" width="600">
-  <figcaption>Spatial Attention map focusing on key facial regions like eyes, eyebrows, and mouth.</figcaption>
+  <figcaption><em>Figura 6:</em> Spatial Attention map focusing on key facial regions like eyes, eyebrows, and mouth. [Source](images/spacial_attention.png)</figcaption>
 </figure>
 
 #### Training Configuration
@@ -145,17 +137,17 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/cbam_accuracy.png" alt="CBAM-5CNN Accuracy" width="600">
-  <figcaption>Training and validation accuracy curves for CBAM-5CNN model.</figcaption>
+  <figcaption><em>Figura 7:</em> Training and validation accuracy curves for CBAM-5CNN model. [Source](images/cbam_accuracy.png)</figcaption>
 </figure>
 
 <figure>
   <img src="images/cbam_loss.png" alt="CBAM-5CNN Loss" width="600">
-  <figcaption>Training and validation loss curves for CBAM-5CNN model.</figcaption>
+  <figcaption><em>Figura 8:</em> Training and validation loss curves for CBAM-5CNN model. [Source](images/cbam_loss.png)</figcaption>
 </figure>
 
 <figure>
   <img src="images/cbam_confusion_matrix.png" alt="CBAM-5CNN Confusion Matrix" width="600">
-  <figcaption>Confusion matrix of CBAM-5CNN predictions across seven emotions.</figcaption>
+  <figcaption><em>Figura 9:</em> Confusion matrix of CBAM-5CNN predictions across seven emotions. [Source](images/cbam_confusion_matrix.png)</figcaption>
 </figure>
 
 ---
@@ -174,7 +166,7 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/efficientnet_architecture.png" alt="EfficientNet Architecture" width="600">
-  <figcaption>EfficientNetB3 architecture used with transfer learning for facial emotion recognition.</figcaption>
+  <figcaption><em>Figura 10:</em> EfficientNetB3 architecture used with transfer learning for facial emotion recognition. [Source](images/efficientnet_architecture.png)</figcaption>
 </figure>
 
 #### Training Configuration
@@ -195,17 +187,17 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/effnet_accuracy.png" alt="EfficientNetB3 Accuracy" width="600">
-  <figcaption>Training and validation accuracy curves for EfficientNetB3 model.</figcaption>
+  <figcaption><em>Figura 11:</em> Training and validation accuracy curves for EfficientNetB3 model. [Source](images/effnet_accuracy.png)</figcaption>
 </figure>
 
 <figure>
   <img src="images/effnet_loss.png" alt="EfficientNetB3 Loss" width="600">
-  <figcaption>Training and validation loss curves for EfficientNetB3 model.</figcaption>
+  <figcaption><em>Figura 12:</em> Training and validation loss curves for EfficientNetB3 model. [Source](images/effnet_loss.png)</figcaption>
 </figure>
 
 <figure>
   <img src="images/effnet_confusion_matrix.png" alt="EfficientNetB3 Confusion Matrix" width="600">
-  <figcaption>Confusion matrix of EfficientNetB3 predictions across seven emotions.</figcaption>
+  <figcaption><em>Figura 13:</em> Confusion matrix of EfficientNetB3 predictions across seven emotions. [Source](images/effnet_confusion_matrix.png)</figcaption>
 </figure>
 
 ---
@@ -219,12 +211,12 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/test_effnet.png" alt="EfficientNetB3 Model Test" width="600">
-  <figcaption>Sample test results of EfficientNetB3 showing correct emotion predictions.</figcaption>
+  <figcaption><em>Figura 14:</em> Sample test results of EfficientNetB3 showing correct emotion predictions. [Source](images/test_effnet.png)</figcaption>
 </figure>
 
 <figure>
   <img src="images/test_cbam.png" alt="CBAM-5CNN Model Test" width="600">
-  <figcaption>Sample test results of CBAM-5CNN showing correct emotion predictions.</figcaption>
+  <figcaption><em>Figura 15:</em> Sample test results of CBAM-5CNN showing correct emotion predictions. [Source](images/test_cbam.png)</figcaption>
 </figure>
 
 ### Observations
