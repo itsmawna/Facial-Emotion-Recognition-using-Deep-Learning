@@ -211,12 +211,12 @@ train_datagen = ImageDataGenerator(
 
 <figure>
   <img src="images/test_effnet.png" alt="EfficientNetB3 Model Test" width="600">
-  <figcaption><em>Figure 14:</em> Sample test results of EfficientNetB3 showing correct emotion predictions.</figcaption>
+  <figcaption><em>Figure 14:</em> Sample test results of EfficientNetB3.</figcaption>
 </figure>
 
 <figure>
   <img src="images/test_cbam.png" alt="CBAM-5CNN Model Test" width="600">
-  <figcaption><em>Figure 15:</em> Sample test results of CBAM-5CNN showing correct emotion predictions.</figcaption>
+  <figcaption><em>Figure 15:</em> Sample test results of CBAM-5CNN.</figcaption>
 </figure>
 
 ### Observations
