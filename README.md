@@ -25,8 +25,6 @@ Both models were trained, validated, and evaluated on an enhanced dataset named 
 
 ## 2. Objectives
 
-The main objectives of this project are as follows:
-
 - Develop and train deep learning models to automatically detect and classify facial emotions.
 - Compare the performance of a pretrained model versus a custom-built CNN.
 - Improve dataset quality through cleaning, relabeling, and augmentation.
@@ -38,8 +36,6 @@ The main objectives of this project are as follows:
 
 ## 3. Dataset Description
 
-The project utilizes a combination of publicly available datasets and a custom enhanced version.
-
 | Dataset | Description | Images | Emotions | Source |
 |----------|--------------|---------|-----------|---------|
 | FER2013 | Grayscale facial expression dataset with seven emotion categories (48x48). | 35,887 | 7 | [FER2013 Dataset](https://www.kaggle.com/datasets/msambare/fer2013) |
@@ -48,9 +44,20 @@ The project utilizes a combination of publicly available datasets and a custom e
 
 ### Sample Images
 
-<img src="images/fer2013_samples.png" alt="FER2013 Samples" width="600" title="Sample images from FER2013 dataset showing various facial expressions.">
-<img src="images/fer2024_samples.png" alt="FER2024 Samples" width="600" title="Enhanced FER2024 dataset samples with corrected labels and additional diversity.">
-<img src="images/ckplus_samples.png" alt="CK+ Samples" width="600" title="High-quality facial expression images from the CK+ dataset for benchmarking.">
+<figure>
+  <img src="images/fer2013_samples.png" alt="FER2013 Samples" width="600">
+  <figcaption>Sample images from FER2013 dataset showing various facial expressions.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/fer2024_samples.png" alt="FER2024 Samples" width="600">
+  <figcaption>Enhanced FER2024 dataset samples with corrected labels and additional diversity.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/ckplus_samples.png" alt="CK+ Samples" width="600">
+  <figcaption>High-quality facial expression images from the CK+ dataset for benchmarking.</figcaption>
+</figure>
 
 **Final dataset used:** FER2024_CK+ (7 emotions)
 
@@ -88,19 +95,16 @@ train_datagen = ImageDataGenerator(
 
 ### 5.1 CBAM-5CNN (Model Built from Scratch)
 
-The CBAM-5CNN is a deep Convolutional Neural Network that integrates a Convolutional Block Attention Module (CBAM).  
-This design allows the network to focus on the most informative channels and spatial regions within facial images.
-
 #### Architecture Details
 
-| Block | Layers | Filters | Description |
-|-------|--------|---------|-------------|
-| Block 1 | Conv2D + BatchNorm + CBAM + MaxPooling + Dropout | 64 | Low-level edge extraction |
-| Block 2 | Conv2D + BatchNorm + CBAM + MaxPooling | 128 | Mid-level pattern recognition |
-| Block 3 | Conv2D ×3 + CBAM | 256 | Emotion-related feature extraction |
-| Block 4 | Conv2D ×3 + CBAM | 512 | High-level facial representation |
-| Block 5 | Conv2D ×3 + CBAM | 512 | Focus refinement |
-| Dense | Flatten + Dense(7, Softmax) | - | Final emotion classification |
+| Block   | Layers                               | Filters | Description                        |
+|---------|-------------------------------------|---------|------------------------------------|
+| Block 1 | Conv2D + BatchNorm + CBAM + MaxPooling + Dropout | 64      | Low-level edge extraction           |
+| Block 2 | Conv2D + BatchNorm + CBAM + MaxPooling | 128     | Mid-level pattern recognition       |
+| Block 3 | Conv2D ×3 + CBAM                     | 256     | Emotion-related feature extraction  |
+| Block 4 | Conv2D ×3 + CBAM                     | 512     | High-level facial representation    |
+| Block 5 | Conv2D ×3 + CBAM                     | 512     | Focus refinement                    |
+| Dense   | Flatten + Dense(7, Softmax)          | -       | Final emotion classification        |
 
 #### Attention Mechanism (CBAM)
 
@@ -108,9 +112,20 @@ This design allows the network to focus on the most informative channels and spa
 - **Spatial Attention:** Highlights significant facial regions such as eyes, eyebrows, and mouth.  
 - **Activation Functions:** ReLU for non-linearity and Sigmoid for attention scaling.
 
-<img src="images/cbam_architecture.png" alt="CBAM Architecture" width="600" title="CBAM-5CNN architecture illustrating convolutional blocks and attention mechanisms.">
-<img src="images/channel_attention.png" alt="Channel Attention" width="600" title="Channel Attention map highlighting the most informative feature channels.">
-<img src="images/spacial_attention.png" alt="Spatial Attention" width="600" title="Spatial Attention map focusing on key facial regions like eyes, eyebrows, and mouth.">
+<figure>
+  <img src="images/cbam_architecture.png" alt="CBAM Architecture" width="600">
+  <figcaption>CBAM-5CNN architecture illustrating convolutional blocks and attention mechanisms.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/channel_attention.png" alt="Channel Attention" width="600">
+  <figcaption>Channel Attention map highlighting the most informative feature channels.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/spacial_attention.png" alt="Spatial Attention" width="600">
+  <figcaption>Spatial Attention map focusing on key facial regions like eyes, eyebrows, and mouth.</figcaption>
+</figure>
 
 #### Training Configuration
 
@@ -122,22 +137,30 @@ This design allows the network to focus on the most informative channels and spa
 
 #### Results
 
-| Metric | Training | Validation |
-|--------|----------|------------|
-| Accuracy | 80.55% | 78.9% |
-| Precision | 84.31% | 81.0% |
-| Recall | 77.09% | 75.4% |
+| Metric    | Training | Validation |
+|-----------|----------|------------|
+| Accuracy  | 80.55%   | 78.9%      |
+| Precision | 84.31%   | 81.0%      |
+| Recall    | 77.09%   | 75.4%      |
 
-<img src="images/cbam_accuracy.png" alt="CBAM-5CNN Accuracy" width="600" title="Training and validation accuracy curves for CBAM-5CNN model.">
-<img src="images/cbam_loss.png" alt="CBAM-5CNN Loss" width="600" title="Training and validation loss curves for CBAM-5CNN model.">
-<img src="images/cbam_confusion_matrix.png" alt="CBAM-5CNN Confusion Matrix" width="600" title="Confusion matrix of CBAM-5CNN predictions across seven emotions.">
+<figure>
+  <img src="images/cbam_accuracy.png" alt="CBAM-5CNN Accuracy" width="600">
+  <figcaption>Training and validation accuracy curves for CBAM-5CNN model.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/cbam_loss.png" alt="CBAM-5CNN Loss" width="600">
+  <figcaption>Training and validation loss curves for CBAM-5CNN model.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/cbam_confusion_matrix.png" alt="CBAM-5CNN Confusion Matrix" width="600">
+  <figcaption>Confusion matrix of CBAM-5CNN predictions across seven emotions.</figcaption>
+</figure>
 
 ---
 
 ### 5.2 EfficientNetB3 (Pretrained Model)
-
-The EfficientNetB3 model leverages transfer learning to achieve higher accuracy with fewer parameters.  
-It was originally pretrained on the ImageNet dataset and fine-tuned on FER2024_CK+.
 
 #### Architecture Adaptation
 
@@ -149,7 +172,10 @@ It was originally pretrained on the ImageNet dataset and fine-tuned on FER2024_C
   - Dense(7, activation='softmax')  
 - Fine-tuned the last 50 layers with a reduced learning rate (1e-5).
 
-<img src="images/efficientnet_architecture.png" alt="EfficientNet Architecture" width="600" title="EfficientNetB3 architecture used with transfer learning for facial emotion recognition.">
+<figure>
+  <img src="images/efficientnet_architecture.png" alt="EfficientNet Architecture" width="600">
+  <figcaption>EfficientNetB3 architecture used with transfer learning for facial emotion recognition.</figcaption>
+</figure>
 
 #### Training Configuration
 
@@ -161,27 +187,45 @@ It was originally pretrained on the ImageNet dataset and fine-tuned on FER2024_C
 
 #### Results
 
-| Metric | Training | Validation |
-|--------|----------|------------|
-| Accuracy | 86.7% | 83.7% |
-| Precision | 87.5% | 86.1% |
-| Recall | 84.8% | 82.5% |
+| Metric    | Training | Validation |
+|-----------|----------|------------|
+| Accuracy  | 86.7%    | 83.7%      |
+| Precision | 87.5%    | 86.1%      |
+| Recall    | 84.8%    | 82.5%      |
 
-<img src="images/effnet_accuracy.png" alt="EfficientNetB3 Accuracy" width="600" title="Training and validation accuracy curves for EfficientNetB3 model.">
-<img src="images/effnet_loss.png" alt="EfficientNetB3 Loss" width="600" title="Training and validation loss curves for EfficientNetB3 model.">
-<img src="images/effnet_confusion_matrix.png" alt="EfficientNetB3 Confusion Matrix" width="600" title="Confusion matrix of EfficientNetB3 predictions across seven emotions.">
+<figure>
+  <img src="images/effnet_accuracy.png" alt="EfficientNetB3 Accuracy" width="600">
+  <figcaption>Training and validation accuracy curves for EfficientNetB3 model.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/effnet_loss.png" alt="EfficientNetB3 Loss" width="600">
+  <figcaption>Training and validation loss curves for EfficientNetB3 model.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/effnet_confusion_matrix.png" alt="EfficientNetB3 Confusion Matrix" width="600">
+  <figcaption>Confusion matrix of EfficientNetB3 predictions across seven emotions.</figcaption>
+</figure>
 
 ---
 
 ## 6. Comparative Analysis
 
-| Model | Accuracy | Precision | Recall | F1-Score |
-|-------|----------|-----------|--------|----------|
-| CBAM-5CNN | 80.55% | 84.31% | 77.09% | 80.0% |
-| EfficientNetB3 | 83.7% | 86.1% | 82.5% | 84.3% |
+| Model         | Accuracy | Precision | Recall | F1-Score |
+|---------------|----------|-----------|--------|----------|
+| CBAM-5CNN     | 80.55%   | 84.31%    | 77.09% | 80.0%    |
+| EfficientNetB3| 83.7%    | 86.1%     | 82.5%  | 84.3%    |
 
-<img src="images/test_effnet.png" alt="EfficientNetB3 Model Test" width="600" title="Sample test results of EfficientNetB3 showing correct emotion predictions.">
-<img src="images/test_cbam.png" alt="CBAM-5CNN Model Test" width="600" title="Sample test results of CBAM-5CNN showing correct emotion predictions.">
+<figure>
+  <img src="images/test_effnet.png" alt="EfficientNetB3 Model Test" width="600">
+  <figcaption>Sample test results of EfficientNetB3 showing correct emotion predictions.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/test_cbam.png" alt="CBAM-5CNN Model Test" width="600">
+  <figcaption>Sample test results of CBAM-5CNN showing correct emotion predictions.</figcaption>
+</figure>
 
 ### Observations
 
@@ -194,24 +238,25 @@ It was originally pretrained on the ImageNet dataset and fine-tuned on FER2024_C
 
 ### Feedback
 
-For any inquiries, feedback, or to discuss this project further, please do not hesitate to contact me.
+For any inquiries, feedback, or to discuss this project further, please do not hesitate to reach out.
 
 ---
 
 ### References
 
-[1] EfficientNet: Optimizing Deep Learning Efficiency, OpenGenus IQ. Available at: https://iq.opengenus.org/efficientnet/  
-[2] EfficientNet: Optimizing Deep Learning Efficiency, Viso.ai. Available at: https://viso.ai/  
-[3] EfficientNet-B3, Scribd. Available at: https://fr.scribd.com/document/638261928/EfficientNet-B3  
-[4] Inverted Residual Block, Serp.ai. Available at: https://serp.ai/inverted-residual-block/  
-[5] Squeeze and Excitation Networks, Arxiv.org. Available at: https://arxiv.org/pdf/1709.01507  
-[6] Squeeze and Excitation Networks, Medium. Available at: https://medium.com/@Vinoth-Ramadoss/squeeze-and-excitation-networks-84e3db0e04e2  
-[7] Complete Architectural Details of All EfficientNet Models, Towards Data Science. Available at: https://towardsdatascience.com/complete-architectural-details-of-all-efficientnet-models-5fd5b736142  
-[8] Understanding Attention Modules: CBAM and BAM, Medium. Available at: https://medium.com/visionwizard/understanding-attention-modules-cbam-and-bam-a-quick-read-ca8678d1c671  
-[9] Remote Sensing and Attention Modules, MDPI. Available at: https://www.mdpi.com/2072-4292/15/9/2406  
-[10] Early Stopping to Avoid Overtraining Neural Network Models, Machine Learning Mastery. Available at: https://machinelearningmastery.com/early-stopping-to-avoid-overtraining-neural-network-models/  
-[11] Early Stopping for Regularisation in Deep Learning, GeeksforGeeks. Available at: https://www.geeksforgeeks.org/early-stopping-for-regularisation-in-deep-learning/  
-[12] ReduceLROnPlateau - TensorFlow Python, W3cubDocs. Available at: https://tf.keras.callbacks.ReduceLROnPlateau  
-[13] Data Augmentation: Tout Savoir, DataScientest. Available at: https://datascientest.com/data-augmentation-tout-savoir  
-[14] Complete Guide to Data Augmentation, DataCamp. Available at: https://www.datacamp.com/tutorial/complete-guide-data-augmentation  
-[15] Data Augmentation Techniques in CNN Using TensorFlow, Medium. Available at: https://medium.com/ymedialabs-innovation/data-augmentation-techniques-in-cnn-using-tensorflow-371ae43d5be9  
+1. [EfficientNet: Optimizing Deep Learning Efficiency, OpenGenus IQ](https://iq.opengenus.org/efficientnet/)  
+2. [EfficientNet: Optimizing Deep Learning Efficiency, Viso.ai](https://viso.ai/)  
+3. [EfficientNet-B3, Scribd](https://fr.scribd.com/document/638261928/EfficientNet-B3)  
+4. [Inverted Residual Block, Serp.ai](https://serp.ai/inverted-residual-block/)  
+5. [Squeeze and Excitation Networks, Arxiv.org](https://arxiv.org/pdf/1709.01507)  
+6. [Squeeze and Excitation Networks, Medium](https://medium.com/@Vinoth-Ramadoss/squeeze-and-excitation-networks-84e3db0e04e2)  
+7. [Complete Architectural Details of All EfficientNet Models, Towards Data Science](https://towardsdatascience.com/complete-architectural-details-of-all-efficientnet-models-5fd5b736142)  
+8. [Understanding Attention Modules: CBAM and BAM, Medium](https://medium.com/visionwizard/understanding-attention-modules-cbam-and-bam-a-quick-read-ca8678d1c671)  
+9. [Remote Sensing and Attention Modules, MDPI](https://www.mdpi.com/2072-4292/15/9/2406)  
+10. [Early Stopping to Avoid Overtraining Neural Network Models, Machine Learning Mastery](https://machinelearningmastery.com/early-stopping-to-avoid-overtraining-neural-network-models/)  
+11. [Early Stopping for Regularisation in Deep Learning, GeeksforGeeks](https://www.geeksforgeeks.org/early-stopping-for-regularisation-in-deep-learning/)  
+12. [ReduceLROnPlateau - TensorFlow Python, W3cubDocs](https://tf.keras.callbacks.ReduceLROnPlateau)  
+13. [Data Augmentation: Tout Savoir, DataScientest](https://datascientest.com/data-augmentation-tout-savoir)  
+14. [Complete Guide to Data Augmentation, DataCamp](https://www.datacamp.com/tutorial/complete-guide-data-augmentation)  
+15. [Data Augmentation Techniques in CNN Using TensorFlow, Medium](https://medium.com/ymedialabs-innovation/data-augmentation-techniques-in-cnn-using-tensorflow-371ae43d5be9)  
+
