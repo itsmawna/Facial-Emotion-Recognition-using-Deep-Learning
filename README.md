@@ -42,13 +42,15 @@ The project utilizes a combination of publicly available datasets and a custom e
 
 | Dataset | Description | Images | Emotions | Source |
 |----------|--------------|---------|-----------|---------|
-| FER2013 | Grayscale facial expression dataset with seven emotion categories (48x48). | 35,887 | 7 | [Kaggle](https://www.kaggle.com/datasets/msambare/fer2013) |
-| FER2024 | Cleaned and relabeled version of FER2013, created to reduce noise and misclassifications. | 35,784 | 10 | Custom |
-| CK+ | High-quality dataset used for benchmarking facial expression recognition. | 920 | 7 | [CK+ Dataset](http://www.peterkim.co.kr/research/ck+dataset) |
+| FER2013 | Grayscale facial expression dataset with seven emotion categories (48x48). | 35,887 | 7 | [FER2013 Dataset](https://www.kaggle.com/datasets/msambare/fer2013) |
+| FER2024 | Cleaned and relabeled version of FER2013, created to reduce noise and misclassifications. | 35,784 | 10 | [FER 2024 Dataset](https://github.com/FERProject/FER24_CKPlus/releases/tag/FER24_CK%2B) |
+| CK+ | High-quality dataset used for benchmarking facial expression recognition. | 920 | 7 | [CK+ Dataset](https://www.kaggle.com/datasets/shuvoalok/ck-dataset) |
 
-![FER2013 Samples](images/fer2013_samples.png)
-![FER2024 Samples](images/fer2024_samples.png)
-![CK+ Samples](images/ckplus_samples.png)
+### Sample Images
+
+<img src="images/fer2013_samples.png" alt="FER2013 Samples" width="600" title="Sample images from FER2013 dataset showing various facial expressions.">
+<img src="images/fer2024_samples.png" alt="FER2024 Samples" width="600" title="Enhanced FER2024 dataset samples with corrected labels and additional diversity.">
+<img src="images/ckplus_samples.png" alt="CK+ Samples" width="600" title="High-quality facial expression images from the CK+ dataset for benchmarking.">
 
 **Final dataset used:** FER2024_CK+ (7 emotions)
 
@@ -92,7 +94,7 @@ This design allows the network to focus on the most informative channels and spa
 #### Architecture Details
 
 | Block | Layers | Filters | Description |
-|--------|---------|----------|-------------|
+|-------|--------|---------|-------------|
 | Block 1 | Conv2D + BatchNorm + CBAM + MaxPooling + Dropout | 64 | Low-level edge extraction |
 | Block 2 | Conv2D + BatchNorm + CBAM + MaxPooling | 128 | Mid-level pattern recognition |
 | Block 3 | Conv2D ×3 + CBAM | 256 | Emotion-related feature extraction |
@@ -106,9 +108,9 @@ This design allows the network to focus on the most informative channels and spa
 - **Spatial Attention:** Highlights significant facial regions such as eyes, eyebrows, and mouth.  
 - **Activation Functions:** ReLU for non-linearity and Sigmoid for attention scaling.
 
-![CBAM Architecture](images/cbam_architecture.png)
-![Channel Attention](images/channel_attention.png)
-![Spatial Attention](images/spatial_attention.png)
+<img src="images/cbam_architecture.png" alt="CBAM Architecture" width="600" title="CBAM-5CNN architecture illustrating convolutional blocks and attention mechanisms.">
+<img src="images/channel_attention.png" alt="Channel Attention" width="600" title="Channel Attention map highlighting the most informative feature channels.">
+<img src="images/spacial_attention.png" alt="Spatial Attention" width="600" title="Spatial Attention map focusing on key facial regions like eyes, eyebrows, and mouth.">
 
 #### Training Configuration
 
@@ -121,14 +123,15 @@ This design allows the network to focus on the most informative channels and spa
 #### Results
 
 | Metric | Training | Validation |
-|---------|-----------|------------|
+|--------|----------|------------|
 | Accuracy | 80.55% | 78.9% |
 | Precision | 84.31% | 81.0% |
 | Recall | 77.09% | 75.4% |
 
-![Cbam-5CNN Accuracy](images/cbam_accuracy.png)
-![Cbam-5CNN loss](images/cbam_loss.png)
-![Cbam-5CNN Confusion Matrix](images/cbam_confusion_matrix.png)
+<img src="images/cbam_accuracy.png" alt="CBAM-5CNN Accuracy" width="600" title="Training and validation accuracy curves for CBAM-5CNN model.">
+<img src="images/cbam_loss.png" alt="CBAM-5CNN Loss" width="600" title="Training and validation loss curves for CBAM-5CNN model.">
+<img src="images/cbam_confusion_matrix.png" alt="CBAM-5CNN Confusion Matrix" width="600" title="Confusion matrix of CBAM-5CNN predictions across seven emotions.">
+
 ---
 
 ### 5.2 EfficientNetB3 (Pretrained Model)
@@ -146,7 +149,7 @@ It was originally pretrained on the ImageNet dataset and fine-tuned on FER2024_C
   - Dense(7, activation='softmax')  
 - Fine-tuned the last 50 layers with a reduced learning rate (1e-5).
 
-![EfficientNet Architecture](images/efficientnet_architecture.png)
+<img src="images/efficientnet_architecture.png" alt="EfficientNet Architecture" width="600" title="EfficientNetB3 architecture used with transfer learning for facial emotion recognition.">
 
 #### Training Configuration
 
@@ -159,25 +162,26 @@ It was originally pretrained on the ImageNet dataset and fine-tuned on FER2024_C
 #### Results
 
 | Metric | Training | Validation |
-|---------|-----------|------------|
+|--------|----------|------------|
 | Accuracy | 86.7% | 83.7% |
 | Precision | 87.5% | 86.1% |
 | Recall | 84.8% | 82.5% |
 
-![EfficientNetB3 Accuracy](images/effnet_accuracy.png)
-![EfficientNetB3 loss](images/effnet_loss.png)
-![EfficientNetB3 Confusion Matrix](images/effnet_confusion_matrix.png)
+<img src="images/effnet_accuracy.png" alt="EfficientNetB3 Accuracy" width="600" title="Training and validation accuracy curves for EfficientNetB3 model.">
+<img src="images/effnet_loss.png" alt="EfficientNetB3 Loss" width="600" title="Training and validation loss curves for EfficientNetB3 model.">
+<img src="images/effnet_confusion_matrix.png" alt="EfficientNetB3 Confusion Matrix" width="600" title="Confusion matrix of EfficientNetB3 predictions across seven emotions.">
+
 ---
 
 ## 6. Comparative Analysis
 
 | Model | Accuracy | Precision | Recall | F1-Score |
-|--------|-----------|-----------|---------|-----------|
+|-------|----------|-----------|--------|----------|
 | CBAM-5CNN | 80.55% | 84.31% | 77.09% | 80.0% |
 | EfficientNetB3 | 83.7% | 86.1% | 82.5% | 84.3% |
 
-![EfficientNetB3 Model Test](images/test_effnet.png)
-![Cbam-5CNN Model Test](images/test_cbam.png)
+<img src="images/test_effnet.png" alt="EfficientNetB3 Model Test" width="600" title="Sample test results of EfficientNetB3 showing correct emotion predictions.">
+<img src="images/test_cbam.png" alt="CBAM-5CNN Model Test" width="600" title="Sample test results of CBAM-5CNN showing correct emotion predictions.">
 
 ### Observations
 
@@ -187,11 +191,14 @@ It was originally pretrained on the ImageNet dataset and fine-tuned on FER2024_C
 - Some misclassifications occurred between similar emotions (Fear vs Surprise).
 
 ---
+
 ### Feedback
+
 For any inquiries, feedback, or to discuss this project further, please do not hesitate to contact me.
 
 ---
-## References
+
+### References
 
 [1] EfficientNet: Optimizing Deep Learning Efficiency, OpenGenus IQ. Available at: https://iq.opengenus.org/efficientnet/  
 [2] EfficientNet: Optimizing Deep Learning Efficiency, Viso.ai. Available at: https://viso.ai/  
@@ -208,4 +215,3 @@ For any inquiries, feedback, or to discuss this project further, please do not h
 [13] Data Augmentation: Tout Savoir, DataScientest. Available at: https://datascientest.com/data-augmentation-tout-savoir  
 [14] Complete Guide to Data Augmentation, DataCamp. Available at: https://www.datacamp.com/tutorial/complete-guide-data-augmentation  
 [15] Data Augmentation Techniques in CNN Using TensorFlow, Medium. Available at: https://medium.com/ymedialabs-innovation/data-augmentation-techniques-in-cnn-using-tensorflow-371ae43d5be9  
-
